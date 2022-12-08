@@ -73,7 +73,14 @@ class _MyHomePageState extends State<MyHomePage> {
               } else if (state is RickAndMortyLoading) {
                 return _buildLoading();
               } else if (state is RickAndMortyLoaded) {
-                return Text("Carregou!");
+                return ListView.builder(
+                  itemCount: state.data.length,
+                  itemBuilder: (context, index) => Stack(
+                    children: [
+                      Text(state.data[index].name.toString())
+                    ],
+                  ),
+                );
               } else if (state is RickAndMortyError) {
                 return Container();
               } else {
