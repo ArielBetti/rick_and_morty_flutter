@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty_flutter/widgets/custom_scroll_behavior.dart';
+import 'package:rick_and_morty_flutter/widgets/person_card.dart';
+
 import 'blocs/rick_and_morty_bloc.dart';
 
 void main() {
@@ -16,10 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      scrollBehavior: CustomScrollBehavior(),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor:  Color.fromRGBO(30, 41, 59, 1),
+          title: const Text('Rick and Morty'),
+        ),
+        backgroundColor: Color.fromRGBO(15, 23, 42, 1),
+        body: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home:  const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -74,10 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 return _buildLoading();
               } else if (state is RickAndMortyLoaded) {
                 return ListView.builder(
+                  scrollDirection: Axis.horizontal,
                   itemCount: state.data.length,
-                  itemBuilder: (context, index) => Stack(
+                  itemBuilder: (context, index) => Wrap(
+                    direction: Axis.vertical,
                     children: [
-                      Text(state.data[index].name.toString())
+                      PersonCard(
+                          name: state.data[index].name.toString(),
+                          status: state.data[index].status.toString(),
+                          lastLocation:
+                              state.data[index].location!.name.toString(),
+                          species: state.data[index].species.toString(),
+                          imageUrl: state.data[index].image.toString()),
                     ],
                   ),
                 );
