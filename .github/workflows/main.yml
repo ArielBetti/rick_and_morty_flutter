@@ -35,7 +35,7 @@ jobs:
           git config --global user.name arielbetti
           git status
           git remote add origin https://${{secrets.TOKEN}}@github.com/ArielBetti/rick_and_morty_flutter
-          git checkout -b gh-pages
-          git add --all
+          git checkout -b gh-pages-web
+          git add .
           git commit -m "update"
-          git push origin gh-pages -f
+          git push origin gh-pages-web -f
